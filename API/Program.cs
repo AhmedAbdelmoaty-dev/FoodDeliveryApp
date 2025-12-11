@@ -5,7 +5,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Configuration);
 
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 

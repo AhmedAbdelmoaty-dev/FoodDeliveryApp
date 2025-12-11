@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -8,5 +9,9 @@ namespace Infrastructure.Data
         {
             
         }
+
+        public DbSet<Restaurant> Restaurants { get; set; }
+
+        public DbSet<MenuItem>MenuItems { get; set; }   
     }
 }
