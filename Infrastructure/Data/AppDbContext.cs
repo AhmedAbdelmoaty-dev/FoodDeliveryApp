@@ -13,5 +13,7 @@ namespace Infrastructure.Data
         public DbSet<Restaurant> Restaurants { get; set; }
 
         public DbSet<MenuItem>MenuItems { get; set; }   
+
+        public DbSet<Tag>Tags { get; set; } 
     }
 }

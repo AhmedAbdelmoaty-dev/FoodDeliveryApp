@@ -22,7 +22,7 @@ namespace Infrastructure.Repos
 
         public async Task<Restaurant?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-           return await context.Restaurants.AsNoTracking()
+           return await context.Restaurants
                 .FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
         }
 

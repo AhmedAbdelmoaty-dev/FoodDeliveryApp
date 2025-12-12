@@ -1,6 +1,8 @@
 ﻿using Application.Abstractions.Repositories;
 using Domain.Abstractions.Result;
+using Domain.Entities;
 using Domain.Errors;
+using Mapster;
 using MediatR;
 
 namespace Application.Features.Restaurants.Commands.UpdateRestaurant
@@ -15,6 +17,8 @@ namespace Application.Features.Restaurants.Commands.UpdateRestaurant
 
             if (restaurant == null)
                 return Result.Failure(RestaurantErrors.NotFound(command.id));
+
+            command.Adapt(restaurant);
 
             restaurantRepo.Update(restaurant);
 

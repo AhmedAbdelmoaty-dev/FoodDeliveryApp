@@ -30,6 +30,8 @@ namespace Infrastructure.Extensions
 
             });
 
+            services.AddScoped<ITagRepository, TagRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();  
 
             services.AddStackExchangeRedisCache(opt =>

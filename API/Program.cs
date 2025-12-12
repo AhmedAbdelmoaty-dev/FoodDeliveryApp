@@ -9,12 +9,15 @@ builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Conf
 
 var app = builder.Build();
 
+app.MapRestaurantsEndpoints();
+app.MapTagsEndpoints();
+
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.MapRestaurantsEndpoints();
 
 app.Run();
