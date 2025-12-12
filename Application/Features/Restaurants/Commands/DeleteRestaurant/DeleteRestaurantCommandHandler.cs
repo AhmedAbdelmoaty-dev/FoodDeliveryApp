@@ -1,9 +1,9 @@
 ﻿using Application.Abstractions.Repositories;
-using Domain.Abstractions;
+using Domain.Abstractions.Result;
 using Domain.Errors;
 using MediatR;
 
-namespace Application.Restaurants.Commands.DeleteRestaurant
+namespace Application.Features.Restaurants.Commands.DeleteRestaurant
 {
     public class DeleteRestaurantCommandHandler(IUnitOfWork unitOfWork,IRestaurantRepository restaurantRepo)
         : IRequestHandler<DeleteRestaurantCommand, Result>

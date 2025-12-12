@@ -1,8 +1,8 @@
 ﻿using Domain.Errors;
 
-namespace Domain.Abstractions
+namespace Domain.Abstractions.Result
 {
-    public class Result
+    public class Result : IAppResult
     {
         public bool IsSuccess { get; }
 
@@ -38,7 +38,7 @@ namespace Domain.Abstractions
 
     }
 
-    public  class Result<T>: Result
+    public  class Result<T>:Result, IAppResult
     {
 
         private readonly T _value;
@@ -55,7 +55,7 @@ namespace Domain.Abstractions
             }
         }
 
-        private Result(bool isSuccess, T value, Error error):base(isSuccess, error)
+        protected Result(bool isSuccess, T value, Error error):base(isSuccess, error)
         {
             _value = value;
         }

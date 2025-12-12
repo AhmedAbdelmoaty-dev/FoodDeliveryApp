@@ -1,6 +1,8 @@
-﻿namespace Domain.Entities
+﻿using Domain.Common;
+
+namespace Domain.Entities
 {
-    public class RestaurantTag
+    public class RestaurantTag :BaseEntity
     {
         public Guid RestaurantId { get; set; }
         

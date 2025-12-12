@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Restaurants\Commands\UpdateRestaurant\" />
-  </ItemGroup>
-
 </Project>

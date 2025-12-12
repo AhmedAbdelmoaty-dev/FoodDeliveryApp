@@ -1,6 +1,4 @@
-﻿using Application.Restaurants;
-
-namespace Application.Common
+﻿namespace Application.Common
 {
     public record PagedResponse<T>
     (

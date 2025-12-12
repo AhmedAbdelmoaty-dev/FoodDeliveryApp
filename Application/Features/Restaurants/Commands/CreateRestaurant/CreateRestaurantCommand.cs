@@ -1,7 +1,7 @@
-﻿using Domain.Abstractions;
+﻿using Domain.Abstractions.Result;
 using MediatR;
 
-namespace Application.Restaurants.Commands.CreateRestaurant
+namespace Application.Features.Restaurants.Commands.CreateRestaurant
 {
     public record CreateRestaurantCommand : IRequest<Result<Guid>>
     {

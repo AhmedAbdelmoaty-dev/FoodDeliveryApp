@@ -1,11 +1,11 @@
 ﻿using Application.Abstractions.Repositories;
-using Domain.Abstractions;
+using Domain.Abstractions.Result;
 using Domain.Entities;
 using Domain.Errors;
 using Mapster;
 using MediatR;
 
-namespace Application.Restaurants.Commands.CreateRestaurant
+namespace Application.Features.Restaurants.Commands.CreateRestaurant
 {
     public class CreateRestaurantCommandHandler(IUnitOfWork unitOfWork,IRestaurantRepository restaurantRepo)
         : IRequestHandler<CreateRestaurantCommand, Result<Guid>>

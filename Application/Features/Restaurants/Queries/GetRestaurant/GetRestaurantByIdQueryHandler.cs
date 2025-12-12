@@ -1,10 +1,11 @@
 ﻿using Application.Abstractions.Repositories;
-using Domain.Abstractions;
+using Application.Features.Restaurants;
+using Domain.Abstractions.Result;
 using Domain.Errors;
 using Mapster;
 using MediatR;
 
-namespace Application.Restaurants.Queries.GetRestaurant
+namespace Application.Features.Restaurants.Queries.GetRestaurant
 {
     internal class GetRestaurantByIdQueryHandler(IRestaurantRepository restaurantRepo) 
         : IRequestHandler<GetRestaurantByIdQuery, Result<RestaurantDto>>

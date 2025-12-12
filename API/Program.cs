@@ -1,3 +1,4 @@
+using API.Endpoints;
 using Application.Extensions;
 using Infrastructure.Extensions;
 
@@ -14,6 +15,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/", () => "Hello World!");
+app.MapRestaurantsEndpoints();
 
 app.Run();

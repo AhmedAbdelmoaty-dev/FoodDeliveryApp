@@ -1,11 +1,12 @@
 ﻿using Application.Abstractions.Repositories;
 using Application.Common;
+using Application.Features.Restaurants;
 using Application.Specifications;
-using Domain.Abstractions;
+using Domain.Abstractions.Result;
 using Mapster;
 using MediatR;
 
-namespace Application.Restaurants.Queries.ListRestaurants
+namespace Application.Features.Restaurants.Queries.ListRestaurants
 {
     internal class GetRestaurantsQueryHandler(IRestaurantRepository restaurantRepo)
         : IRequestHandler<GetRestaurantsQuery, Result<PagedResponse<RestaurantDto>>>
