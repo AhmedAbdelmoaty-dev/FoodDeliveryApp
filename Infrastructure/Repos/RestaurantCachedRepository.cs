@@ -72,5 +72,20 @@ namespace Infrastructure.Repos
         {
             return await restaurantRepo.CountAsync(cancellationToken);
         }
+
+        public async Task<Restaurant?> GetRestaurantWithListMenuItemsByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+          return await restaurantRepo.GetRestaurantWithListMenuItemsByIdAsync(id,cancellationToken);
+        }
+
+        public async Task<Restaurant?> GetRestaurantWithSpecificMenuItemByIdAsync(Guid RestaurantId, Guid menuItemId, CancellationToken cancellationToken = default)
+        {
+          return  await restaurantRepo.GetRestaurantWithSpecificMenuItemByIdAsync(RestaurantId, menuItemId, cancellationToken);
+        }
+
+        public async Task<Restaurant?> GetRestaurantWithTagsAsync(Guid RestaurantId, CancellationToken cancellationToken = default)
+        {
+            return await restaurantRepo.GetRestaurantWithTagsAsync(RestaurantId, cancellationToken);
+        }
     }
 }

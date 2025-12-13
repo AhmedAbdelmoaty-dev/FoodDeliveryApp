@@ -12,7 +12,7 @@ namespace Infrastructure.Repos
             _context = context;
         }
         public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken=default) =>
-           await _context.SaveChangesAsync() > 0;
+           await _context.SaveChangesAsync(cancellationToken) > 0;
 
     }
 }

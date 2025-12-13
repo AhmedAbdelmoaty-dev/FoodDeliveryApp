@@ -20,6 +20,12 @@ namespace Infrastructure.Repos
         public async Task<Tag?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
            return await  context.Tags.FirstOrDefaultAsync(x=>x.Id==id);
+
+        }
+
+        public Task<bool> IsExsistsAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return context.Tags.AnyAsync(x=>x.Id==id,cancellationToken);
         }
 
         public void Rename(Tag tag)

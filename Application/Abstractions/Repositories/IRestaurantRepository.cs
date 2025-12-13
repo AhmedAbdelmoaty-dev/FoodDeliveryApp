@@ -12,6 +12,12 @@ namespace Application.Abstractions.Repositories
 
         Task<int> CountAsync(CancellationToken cancellationToken = default);
 
+        Task<Restaurant?> GetRestaurantWithListMenuItemsByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+        Task<Restaurant?> GetRestaurantWithSpecificMenuItemByIdAsync(Guid RestaurantId, Guid menuItemId, CancellationToken cancellationToken = default);
+
+        Task<Restaurant?> GetRestaurantWithTagsAsync(Guid RestaurantId, CancellationToken cancellationToken = default);
+
         void Create(Restaurant entity);
 
         void Delete( Restaurant entity );

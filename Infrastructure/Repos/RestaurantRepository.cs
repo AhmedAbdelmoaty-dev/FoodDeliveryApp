@@ -26,6 +26,27 @@ namespace Infrastructure.Repos
                 .FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
         }
 
+        public async Task<Restaurant?> GetRestaurantWithListMenuItemsByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return await context.Restaurants
+                .Include(r => r.MenuItems)
+                .FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
+        }
+
+        public async Task<Restaurant?> GetRestaurantWithSpecificMenuItemByIdAsync
+            (Guid RestaurantId,Guid menuItemId, CancellationToken cancellationToken = default)
+        {
+            return await context.Restaurants.Include(r=>r.MenuItems.Where(mi=>mi.Id==menuItemId))
+                .FirstOrDefaultAsync(r => r.Id == RestaurantId, cancellationToken);
+        }
+
+        public async Task<Restaurant?> GetRestaurantWithTagsAsync
+            (Guid RestaurantId,CancellationToken cancellationToken = default)
+        {
+            return await context.Restaurants.Include(x=>x.RestaurantTags).ThenInclude(rt=>rt.Tag)
+                .FirstOrDefaultAsync(r => r.Id == RestaurantId, cancellationToken);
+        }
+
         public void Update(Restaurant enttiy) => context.Update(enttiy);
         
         public void Create(Restaurant entity) => context.Add(entity);
@@ -44,5 +65,7 @@ namespace Infrastructure.Repos
 
             return query;
         }
+
+      
     }
 }

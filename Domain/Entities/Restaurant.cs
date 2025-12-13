@@ -11,9 +11,9 @@ namespace Domain.Entities
        
         public string LogoUrl { get; set; }
 
-        public List<RestaurantTag> RestaurantTags { get; set; }
+        public List<RestaurantTag> RestaurantTags { get; set; } = new();
 
-        public ICollection<MenuItem> MenuItems { get; set; }    
+        public ICollection<MenuItem> MenuItems { get; set; } =  new List<MenuItem>();
 
 
     }

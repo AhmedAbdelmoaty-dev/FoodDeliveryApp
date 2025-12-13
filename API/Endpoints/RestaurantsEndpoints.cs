@@ -7,6 +7,9 @@ using Application.Features.Restaurants.Queries.ListRestaurants;
 using Application.Features.Restaurants.Commands.DeleteRestaurant;
 using Application.Features.Restaurants.Queries.GetRestaurant;
 using MediatR;
+using Application.Features.Restaurants.Commands.CreateMenuItem;
+using Application.Features.Restaurants.Commands.UpdateMenuItem;
+using Application.Features.Restaurants.Commands.DeleteMenuItem;
 
 namespace API.Endpoints
 {
@@ -14,7 +17,7 @@ namespace API.Endpoints
     {
         public static void MapRestaurantsEndpoints(this WebApplication app)
         {
-            var group = app.MapGroup("/api/restaurants");
+            var group = app.MapGroup("/api/restaurants").WithTags("Restaurants");
 
             group.MapGet("/{id}", async (Guid id , ISender sender) =>
             {
@@ -24,7 +27,7 @@ namespace API.Endpoints
             });
 
 
-            group.MapGet("", async (GetRestaurantsQuery query, ISender sender) =>
+            group.MapGet("", async ([AsParameters] GetRestaurantsQuery query, ISender sender) =>
             {
                 var result = await sender.Send(query);
 
@@ -45,13 +48,33 @@ namespace API.Endpoints
                 return result.ToHttpResult();
             });
 
-            group.MapPut("{id}", async (UpdateRestaurantCommand command, ISender sender) =>
+            group.MapPatch("{id}", async (UpdateRestaurantCommand command, ISender sender) =>
             {
                 var result = await sender.Send(command);
 
                 return result.ToHttpResult();
             });
 
+            group.MapPost("/{restaurantId}/Menu-items", async (CreateMenuItemCommand command, ISender sender) =>
+            {
+                var result = await sender.Send(command);
+                
+                return result.ToHttpResult();
+            });
+
+            group.MapPut("/{restaurantId}/Menu-items/{menuItemId}",async(UpdateMenuItemCommand command, ISender sender)=>
+            {
+                var result = await sender.Send(command);
+                
+                return result.ToHttpResult();
+            });
+
+            group.MapDelete("/{restaurantId}/Menu-items/{menuItemId}", async([AsParameters]DeleteMenuItemCommand command, ISender sender)=>
+            {
+                var result = await sender.Send(command);
+                
+                return result.ToHttpResult();
+            });
 
         }
     }

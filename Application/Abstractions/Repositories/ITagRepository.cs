@@ -11,5 +11,7 @@ namespace Application.Abstractions.Repositories
         Task<IReadOnlyList<Tag?>> GetAllAsync(CancellationToken cancellationToken=default);
 
         Task<Tag> GetByIdAsync(Guid id,CancellationToken cancellationToken=default); 
+
+        Task<bool> IsExsistsAsync(Guid id,CancellationToken cancellationToken=default);
     }
 }

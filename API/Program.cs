@@ -6,11 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices().AddInfrastructureServices(builder.Configuration);
 
+builder.Services.AddSwaggerGen().AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-app.MapRestaurantsEndpoints();
-app.MapTagsEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
@@ -19,5 +18,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapRestaurantsEndpoints();
+app.MapTagsEndpoints();
 
 app.Run();
