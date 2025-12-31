@@ -13,19 +13,19 @@ namespace Application.Features.Restaurants.Commands.CreateMenuItem
     {
         public async Task<Result<Guid>> Handle(CreateMenuItemCommand command, CancellationToken cancellationToken)
         {
-            var restaurant = await restaurantRepository
-                .GetByIdAsync(command.RestaurantId, cancellationToken);
+            var isRestaurantExist = await restaurantRepository
+                .IsExistAsync(command.RestaurantId, cancellationToken);
 
-            if (restaurant is null)
+            if (!isRestaurantExist)
                 return Result<Guid>.Failure(RestaurantErrors.NotFound(command.RestaurantId));
 
             var menuItem = command.Adapt<MenuItem>();
 
             menuItem.Id = Guid.NewGuid();
 
-            restaurant.MenuItems.Add(menuItem);
+            restaurantRepository.CreateMenuItem(menuItem);
 
-           var isPersisted= await  unitOfWork.SaveChangesAsync(cancellationToken);
+            var isPersisted= await  unitOfWork.SaveChangesAsync(cancellationToken);
 
             if (!isPersisted)
                 return Result<Guid>.Failure(Error.Persistance);

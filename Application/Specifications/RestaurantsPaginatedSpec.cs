@@ -15,5 +15,13 @@ namespace Application.Specifications
 
             ApplyPaging(skip, pageSize);
         }
+
+        public class RestaurantWithItemsSpec:Specification<Restaurant>
+        {
+            public RestaurantWithItemsSpec(Guid RestaurantId):base(x=>x.Id==RestaurantId)
+            {
+                AddInclude(x=>x.MenuItems);
+            }
+        }
     }
 }

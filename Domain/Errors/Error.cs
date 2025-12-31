@@ -27,6 +27,7 @@
         public const string Forbidden = "Forbidden";
         public const string Conflict = "Conflict";
         public const string Validation = "Validation";
+        public const string Authentication = "Authentication";
 
     }
 

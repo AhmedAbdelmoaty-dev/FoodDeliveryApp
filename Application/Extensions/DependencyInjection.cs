@@ -1,4 +1,5 @@
 ﻿using Application.Behaviors;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Extensions
@@ -12,7 +13,9 @@ namespace Application.Extensions
                   cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
                   cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
             });
-            
+
+            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
             return services;
         }
     }

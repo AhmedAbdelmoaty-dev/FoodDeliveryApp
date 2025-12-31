@@ -20,6 +20,7 @@ namespace Application.Abstractions.Specification
         public bool IsPagingEnabled { get; private set; }
 
         public Expression<Func<TEntity, object>> OrderByDesc { get; private set; }
+        public Expression<Func<TEntity, object>> OrderBy { get; private set; }
 
         public List<Expression<Func<TEntity, object>>> Includes { get; init; } = new();
 
@@ -27,14 +28,16 @@ namespace Application.Abstractions.Specification
         protected void AddOrderByDesc(Expression<Func<TEntity, object>> orderByDescExpression)
             => OrderByDesc = orderByDescExpression;
 
+        protected void AddOrderBy(Expression<Func<TEntity,object>>orderByAscExpression)
+            =>OrderBy = orderByAscExpression;
         protected void AddInclude(Expression<Func<TEntity, object>> includeExpression)
             => Includes.Add(includeExpression);
 
-        protected void ApplyPaging(int skip, int take)
+        protected void ApplyPaging(int skip, int take,bool isPagingEnabled=true)
         {
             Take = take;
             Skip = skip;
-            IsPagingEnabled = true;
+            IsPagingEnabled = isPagingEnabled;
         }
 
         public string ToStringFragments()
@@ -51,7 +54,7 @@ namespace Application.Abstractions.Specification
 
             key.Append($"Skip:{Skip}_");
 
-            key.Append($"Skip:{Take}");
+            key.Append($"Take:{Take}");
 
             return key.ToString();
 

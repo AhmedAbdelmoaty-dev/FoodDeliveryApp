@@ -22,8 +22,13 @@ namespace Infrastructure.Repos
 
         public async Task<Restaurant?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-           return await context.Restaurants
+           return await context.Restaurants.Include(x=>x.MenuItems)
                 .FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
+        }
+
+        public async Task<bool> IsExistAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return await context.Restaurants.AnyAsync(r => r.Id == id, cancellationToken);
         }
 
         public async Task<Restaurant?> GetRestaurantWithListMenuItemsByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -45,6 +50,10 @@ namespace Infrastructure.Repos
         {
             return await context.Restaurants.Include(x=>x.RestaurantTags).ThenInclude(rt=>rt.Tag)
                 .FirstOrDefaultAsync(r => r.Id == RestaurantId, cancellationToken);
+        }
+       public void CreateMenuItem(MenuItem menuItem)
+        {
+            context.Add(menuItem);
         }
 
         public void Update(Restaurant enttiy) => context.Update(enttiy);

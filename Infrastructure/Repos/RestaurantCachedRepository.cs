@@ -87,5 +87,15 @@ namespace Infrastructure.Repos
         {
             return await restaurantRepo.GetRestaurantWithTagsAsync(RestaurantId, cancellationToken);
         }
+
+        public Task<bool> IsExistAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMenuItem(MenuItem menuItem)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

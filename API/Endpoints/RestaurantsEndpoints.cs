@@ -10,6 +10,7 @@ using MediatR;
 using Application.Features.Restaurants.Commands.CreateMenuItem;
 using Application.Features.Restaurants.Commands.UpdateMenuItem;
 using Application.Features.Restaurants.Commands.DeleteMenuItem;
+using Application.Features.Restaurants.Queries.GetRestaurantWIthItems;
 
 namespace API.Endpoints
 {
@@ -19,62 +20,72 @@ namespace API.Endpoints
         {
             var group = app.MapGroup("/api/restaurants").WithTags("Restaurants");
 
-            group.MapGet("/{id}", async (Guid id , ISender sender) =>
+            group.MapGet("/{id}", async (Guid id , ISender sender, CancellationToken ct) =>
             {
-                var result = await sender.Send(new GetRestaurantByIdQuery(id));
+                var result = await sender.Send(new GetRestaurantByIdQuery(id), ct);
 
                return result.ToHttpResult<RestaurantDto>();
             });
 
 
-            group.MapGet("", async ([AsParameters] GetRestaurantsQuery query, ISender sender) =>
+            group.MapGet("", async ([AsParameters] GetRestaurantsQuery query, ISender sender, CancellationToken ct) =>
             {
                 var result = await sender.Send(query);
 
                 return result.ToHttpResult<PagedResponse<RestaurantDto>>();
             });
 
-            group.MapPost("", async (CreateRestaurantCommand command ,ISender sender) =>
+            group.MapGet("/{id}/menu", async (Guid id, ISender sender) =>
             {
-                var result = await sender.Send(command);
+
+                var result = await sender.Send(new GetRestaurantWithItemQuery(id));
+
+                result.ToHttpResult();
+            });
+
+            group.MapPost("", async (CreateRestaurantCommand command ,ISender sender, CancellationToken ct) =>
+            {
+                var result = await sender.Send(command, ct);
 
                 return result.ToHttpResult();
             });
 
-            group.MapDelete("{id}", async (Guid id, ISender sender) =>
+            group.MapDelete("{id}", async (Guid id, ISender sender, CancellationToken ct) =>
             {
-                var result = await sender.Send(new DeleteRestaurantCommand(id));
+                var result = await sender.Send(new DeleteRestaurantCommand(id), ct);
 
                 return result.ToHttpResult();
             });
 
-            group.MapPatch("{id}", async (UpdateRestaurantCommand command, ISender sender) =>
+            group.MapPatch("{id}", async (UpdateRestaurantCommand command, ISender sender, CancellationToken ct) =>
             {
-                var result = await sender.Send(command);
+                var result = await sender.Send(command, ct);
 
                 return result.ToHttpResult();
             });
 
-            group.MapPost("/{restaurantId}/Menu-items", async (CreateMenuItemCommand command, ISender sender) =>
+            group.MapPost("/{restaurantId}/Menu-items", async (CreateMenuItemCommand command, ISender sender, CancellationToken ct) =>
             {
-                var result = await sender.Send(command);
+                var result = await sender.Send(command, ct);
                 
                 return result.ToHttpResult();
             });
 
-            group.MapPut("/{restaurantId}/Menu-items/{menuItemId}",async(UpdateMenuItemCommand command, ISender sender)=>
+            group.MapPut("/{restaurantId}/Menu-items/{menuItemId}",async(UpdateMenuItemCommand command, ISender sender, CancellationToken ct) =>
             {
-                var result = await sender.Send(command);
+                var result = await sender.Send(command, ct);
                 
                 return result.ToHttpResult();
             });
 
-            group.MapDelete("/{restaurantId}/Menu-items/{menuItemId}", async([AsParameters]DeleteMenuItemCommand command, ISender sender)=>
+            group.MapDelete("/{restaurantId}/Menu-items/{menuItemId}", async([AsParameters]DeleteMenuItemCommand command, ISender sender, CancellationToken ct) =>
             {
-                var result = await sender.Send(command);
+                var result = await sender.Send(command,ct);
                 
                 return result.ToHttpResult();
             });
+
+            
 
         }
     }
