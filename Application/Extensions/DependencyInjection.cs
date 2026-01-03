@@ -1,4 +1,5 @@
-﻿using Application.Behaviors;
+﻿using Application.Abstractions.Services;
+using Application.Behaviors;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +16,7 @@ namespace Application.Extensions
             });
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
 
             return services;
         }

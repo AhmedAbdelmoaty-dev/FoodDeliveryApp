@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Repositories;
+using Application.Abstractions.Services;
 using Domain.Abstractions.Result;
 using Domain.Entities;
 using Domain.Errors;
@@ -7,7 +8,8 @@ using MediatR;
 
 namespace Application.Features.Order.Commands.MarkPreparing
 {
-    internal class MarkOrderPreparingCommandHandler(IOrderRepository orderRepo,IUnitOfWork unitOfWork)
+    internal class MarkOrderPreparingCommandHandler(IOrderRepository orderRepo
+        ,IUnitOfWork unitOfWork,IOrderNotificationService notificationService)
         : IRequestHandler<MarkOrderPreparingCommand, Result>
     {
         public async Task<Result> Handle(MarkOrderPreparingCommand command, CancellationToken cancellationToken)
@@ -19,9 +21,14 @@ namespace Application.Features.Order.Commands.MarkPreparing
 
             order.Status = OrderStatus.Preparing;
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+           var isPersisted= await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            if (!isPersisted)
+                return Result.Failure(Error.Persistance);
+
+           await notificationService.OrderStatusChangedAsync(order);
+
+           return Result.Success();
         }
     }
 }

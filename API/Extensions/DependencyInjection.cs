@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using API.Notifications;
+using Application.Abstractions.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -13,7 +15,7 @@ namespace API.Extensions
 
 
 
-
+            services.AddSignalR();
 
             services.AddAuthentication(options =>
             {
@@ -68,6 +70,8 @@ namespace API.Extensions
             services.AddAuthentication();
 
             services.AddAuthorization();
+
+            services.AddScoped<IOrderNotificationService, OrderNotificationService>();
 
             return services;
         }

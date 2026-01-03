@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Repositories;
+using Application.Abstractions.Services;
 using Domain.Abstractions.Result;
 using Domain.Entities;
 using Domain.Errors;
@@ -8,7 +9,8 @@ using Microsoft.AspNetCore.Identity;
 namespace Application.Features.Order.Commands.CreateOrder
 {
     public class CreateOrderCommandHandler(IRestaurantRepository restaurantRepo,
-        IOrderRepository orderRepo,UserManager<User> userManager, IUnitOfWork unitOfWork)
+        IOrderRepository orderRepo,UserManager<User> userManager
+        , IUnitOfWork unitOfWork,IOrderNotificationService notificationService)
         : IRequestHandler<CreateOrderCommand, Result<Guid>>
     {
         public async Task<Result<Guid>> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
@@ -57,6 +59,8 @@ namespace Application.Features.Order.Commands.CreateOrder
 
             if(!isPersisted)
                 return Result<Guid>.Failure(Error.Persistance);
+
+            await notificationService.OrderCreatedAsync(order);
 
             return Result<Guid>.Success(order.Id);
         }

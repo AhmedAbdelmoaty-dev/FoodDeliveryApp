@@ -1,6 +1,5 @@
 ﻿using Domain.Abstractions.Result;
 using FluentValidation;
-using FluentValidation.Validators;
 using MediatR;
 
 namespace Application.Features.Order.Commands.MarkPreparing

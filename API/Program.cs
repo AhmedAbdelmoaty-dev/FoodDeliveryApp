@@ -1,5 +1,6 @@
 using API.Endpoints;
 using API.Extensions;
+using API.Hubs;
 using Application.Extensions;
 using Infrastructure.Extensions;
 
@@ -17,7 +18,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-
+app.MapHub<OrdersHub>("/hubs/orders");
 
 if (app.Environment.IsDevelopment())
 {
