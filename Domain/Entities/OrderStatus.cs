@@ -4,6 +4,7 @@
     {
         Placed,
         Accepted,
+        Cancelled,
         Preparing,
         OutForDelivery,
         Delivered

@@ -2,6 +2,7 @@
 using Application.Abstractions.Services;
 using Domain.Entities;
 using Infrastructure.Authentication;
+using Infrastructure.Cache;
 using Infrastructure.Data;
 using Infrastructure.Repos;
 using Microsoft.AspNetCore.Identity;
@@ -28,10 +29,12 @@ namespace Infrastructure.Extensions
             //   var repository= provider.GetRequiredService<RestaurantRepository>();
 
             //   var cache = provider.GetRequiredService<IDistributedCache>();
-               
+
             //    return new RestaurantCachedRepository(repository,cache);
 
             //});
+
+            services.AddScoped<ICacheService, CacheService>();
 
             services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 

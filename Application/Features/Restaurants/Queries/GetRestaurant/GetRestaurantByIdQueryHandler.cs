@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Repositories;
-using Application.Features.Restaurants;
 using Domain.Abstractions.Result;
 using Domain.Errors;
 using Mapster;

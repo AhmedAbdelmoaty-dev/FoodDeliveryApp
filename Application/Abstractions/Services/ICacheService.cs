@@ -2,10 +2,10 @@
 {
     public interface ICacheService
     {
-        Task<T?> GetAsync<T>(string key,CancellationToken cancellationToken);
+        Task<T?> GetAsync<T>(string key,CancellationToken cancellationToken = default);
 
-        Task SetAsync<T>(string key, T value, CancellationToken cancellationToken, TimeSpan? absoluteExpireTime = null, TimeSpan? slidingExpireTime=null);
+        Task SetAsync<T>(string key, T value, CancellationToken cancellationToken = default, TimeSpan? absoluteExpireTime = null, TimeSpan? slidingExpireTime=null);
 
-        Task RemoveAsync(string key, CancellationToken cancellationToken);
+        Task RemoveAsync(string key, CancellationToken cancellationToken = default);
     }
 }

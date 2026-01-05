@@ -11,5 +11,11 @@
 
         public static Error NotFound(Guid id) =>
             new Error("Order.NotFound", $"Order with id {id} was not found");
+
+        public static Error InvalidCancellation(Guid orderId) =>
+            new Error("InvalidCancellation", $"Cannot cancel the order with {orderId} because its already preparing or out for delivery");
+
+        public static Error IdentityNotMatch=new Error(ErrorCodes.Forbidden,"user not own the order ");
+
     }
 }

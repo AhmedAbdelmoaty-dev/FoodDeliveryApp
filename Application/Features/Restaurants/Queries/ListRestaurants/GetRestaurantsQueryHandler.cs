@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Repositories;
 using Application.Common;
-using Application.Features.Restaurants;
 using Application.Specifications;
 using Domain.Abstractions.Result;
 using Mapster;

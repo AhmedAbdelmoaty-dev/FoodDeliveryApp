@@ -40,24 +40,6 @@ namespace Application.Abstractions.Specification
             IsPagingEnabled = isPagingEnabled;
         }
 
-        public string ToStringFragments()
-        {
-            var key = new StringBuilder();
-
-            if(OrderByDesc is not null)
-                key.Append($"Criteria:Desc_");
-
-            foreach(var include in Includes)
-            {
-                key.Append($"Inc:{include.ToString()}_");
-            }
-
-            key.Append($"Skip:{Skip}_");
-
-            key.Append($"Take:{Take}");
-
-            return key.ToString();
-
-        }
+       
     }
 }

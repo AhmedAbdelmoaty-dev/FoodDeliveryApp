@@ -12,7 +12,9 @@ namespace Application.Extensions
             services.AddMediatR(cfg => {
                   cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
                   cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                  cfg.AddOpenBehavior(typeof(CachingBehavior<,>));
                   cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+                  cfg.AddOpenBehavior(typeof(CacheInvalidatorBehavior<,>));
             });
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);

@@ -1,11 +1,13 @@
 ﻿using API.Extensions;
 using Application.Features.Order.Commands.AcceptOrder;
+using Application.Features.Order.Commands.CancelOrder;
 using Application.Features.Order.Commands.CreateOrder;
 using Application.Features.Order.Commands.MarkPreparing;
 using Application.Features.Order.Queries.GetById;
 using Application.Features.Order.Queries.GetOrdersForRestaurant;
 using Application.Features.Order.Queries.GetOrdersForUser;
 using MediatR;
+using System.Security.Claims;
 
 namespace API.Endpoints
 {
@@ -52,6 +54,15 @@ namespace API.Endpoints
             group.MapGet("/mark-preparing/{id}", async (Guid id, ISender sender) =>
             {
                 var result = await sender.Send(new MarkOrderPreparingCommand(id));
+
+                return result.ToHttpResult();
+            });
+
+            group.MapPost("/cancel/{id}", async (Guid id, ISender sender, ClaimsPrincipal user) =>
+            {
+                var userId=  Guid.Parse(user?.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                var result = await sender.Send(new CancelOrderCommand(userId, id));
 
                 return result.ToHttpResult();
             });
