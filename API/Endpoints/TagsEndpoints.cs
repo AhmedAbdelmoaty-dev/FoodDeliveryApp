@@ -5,6 +5,7 @@ using Application.Features.Tags.Commands.RenameTag;
 using Application.Features.Tags.Queries.GetAll;
 using Application.Features.Tags.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace API.Endpoints
@@ -29,14 +30,14 @@ namespace API.Endpoints
                 return result.ToHttpResult<TagDto>();
             });
 
-            group.MapPatch("{id}", async ( RenameTagCommand command,ISender sender) =>
+            group.MapPatch("{id}", [Authorize] async ( RenameTagCommand command,ISender sender) =>
             {
                var result= await sender.Send(command);
 
                 return result.ToHttpResult();
             });
 
-            group.MapPost("", async (CreateTagCommand command, ISender sender) =>
+            group.MapPost("", [Authorize] async (CreateTagCommand command, ISender sender) =>
             {
                 var result = await sender.Send(command);
 

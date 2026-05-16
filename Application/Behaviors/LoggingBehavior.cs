@@ -18,11 +18,11 @@ namespace Application.Behaviors
             
             timer.Stop();
 
-            var timeInSeconds = timer.Elapsed.Seconds;
+            var timeInMs = timer.ElapsedMilliseconds;
 
-            if (timeInSeconds > 2)
-                logger.LogWarning("[Performance] the request {request} took {timeInMilliseconds}",
-                    typeof(TRequest).Name, timeInSeconds);
+            if (timeInMs > 2000)
+                logger.LogWarning("[Performance] the request {RequestName} took {TimeInMs}ms",
+                    typeof(TRequest).Name, timeInMs);
             
             return response;
         }

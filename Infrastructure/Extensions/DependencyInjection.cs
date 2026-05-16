@@ -5,6 +5,7 @@ using Infrastructure.Authentication;
 using Infrastructure.Cache;
 using Infrastructure.Data;
 using Infrastructure.Repos;
+using Infrastructure.Storage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -57,8 +58,11 @@ namespace Infrastructure.Extensions
                 opt.Configuration = configuration.GetConnectionString("Redis");
             });
 
-
-
+            services.Configure<StorageOptions>(configuration.GetSection("Storage"));
+            
+            services.AddScoped<IImageProcessor, ImageProcessor>();
+            
+            services.AddScoped<IFileStorageService, LocalFileStorageService>();
 
             return services;
         }

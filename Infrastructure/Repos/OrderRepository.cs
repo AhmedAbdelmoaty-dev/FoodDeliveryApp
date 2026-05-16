@@ -21,7 +21,9 @@ namespace Infrastructure.Repos
 
         public async Task<Order?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-           return await context.Orders.FirstOrDefaultAsync(x=>x.Id==id,cancellationToken);
+           return await context.Orders
+                .Include(o => o.OrderItems)
+                .FirstOrDefaultAsync(x=>x.Id==id,cancellationToken);
         }
 
         public async Task<IReadOnlyList<Order>> GetOrdersBySpecAsync(Specification<Order> spec, CancellationToken cancellationToken = default)

@@ -9,5 +9,8 @@ namespace Domain.Entities
         public decimal UnitPrice { get; set; }
         public decimal Quantity { get; set; }
         public decimal TotalPrice=>UnitPrice*Quantity;
+
+        public Guid OrderId { get; set; }
+        public Order Order { get; set; } = null!;
     }
 }

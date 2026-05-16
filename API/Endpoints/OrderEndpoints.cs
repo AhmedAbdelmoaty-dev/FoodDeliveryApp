@@ -7,6 +7,7 @@ using Application.Features.Order.Queries.GetById;
 using Application.Features.Order.Queries.GetOrdersForRestaurant;
 using Application.Features.Order.Queries.GetOrdersForUser;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
 namespace API.Endpoints
@@ -17,9 +18,11 @@ namespace API.Endpoints
         {
             var group = app.MapGroup("/api/orders").WithTags("Orders");
             
-            group.MapPost("", async (CreateOrderCommand command, ISender sender, CancellationToken ct) =>
+            group.MapPost("", [Authorize] async (CreateOrderCommand command, ISender sender, ClaimsPrincipal user, CancellationToken ct) =>
             {
-                var result = await sender.Send(command, ct);
+                var userId = Guid.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
+                var orderWithUserId = new CreateOrderCommand(command.OrderItems, command.RestaurantId, userId);
+                var result = await sender.Send(orderWithUserId, ct);
                
                 return result.ToHttpResult();
             });
@@ -31,36 +34,36 @@ namespace API.Endpoints
                 return result.ToHttpResult();
             });
 
-            group.MapGet("/restaurant", async ([AsParameters] GetOrdersForRestaurantQuery query,ISender sender) =>
+            group.MapGet("/restaurant", [Authorize] async ([AsParameters] GetOrdersForRestaurantQuery query,ISender sender) =>
             {
                var result= await sender.Send(query);
 
                 return result.ToHttpResult();
             });
-            group.MapGet("/user", async ([AsParameters] GetOrdersForUserQuery query, ISender sender) =>
+            group.MapGet("/user", [Authorize] async ([AsParameters] GetOrdersForUserQuery query, ISender sender) =>
             {
                 var result = await sender.Send(query);
 
                 return result.ToHttpResult();
             });
 
-            group.MapGet("/accept/{id}", async (Guid id,ISender sender) =>
+            group.MapGet("/accept/{id}", [Authorize] async (Guid id,ISender sender) =>
             {
                 var result = await sender.Send(new AcceptOrderCommand(id));
 
                 return result.ToHttpResult();
             });
 
-            group.MapGet("/mark-preparing/{id}", async (Guid id, ISender sender) =>
+            group.MapGet("/mark-preparing/{id}", [Authorize] async (Guid id, ISender sender) =>
             {
                 var result = await sender.Send(new MarkOrderPreparingCommand(id));
 
                 return result.ToHttpResult();
             });
 
-            group.MapPost("/cancel/{id}", async (Guid id, ISender sender, ClaimsPrincipal user) =>
+            group.MapPost("/cancel/{id}", [Authorize] async (Guid id, ISender sender, ClaimsPrincipal user) =>
             {
-                var userId=  Guid.Parse(user?.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var userId = Guid.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
 
                 var result = await sender.Send(new CancelOrderCommand(userId, id));
 
